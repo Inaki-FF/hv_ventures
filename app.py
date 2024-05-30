@@ -23,15 +23,8 @@ if st.button("Send"):
         bot_response = agent.talk(user_input)
         
         # Store chat history in session state
-        st.session_state['responses'].append({"user": user_input, "bot": bot_response})
+        st.write(f"Response: {bot_response}")
         
-        # Clear user input
-        user_input = ""
 
-# Display chat history
-if st.session_state['responses']:
-    for response in st.session_state['responses']:
-        st.write(f"You: {response['user']}")
-        st.write(f"Bot: {response['bot']}")
 
 
