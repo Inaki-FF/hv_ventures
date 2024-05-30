@@ -17,6 +17,8 @@ def gpt_call(prompt, system):
     return response
 
 
+import pandas as pd
+
 class Excel_Agent:
     def __init__(self, file_name='Hi Dev Case Database.xlsx',system="You are an assistant that needs to generate pandas code to query an excel. The user will ask you queries about the excel."):
         self.file_name = file_name
@@ -58,12 +60,14 @@ class Excel_Agent:
 
         prompt = f"""this is the query the user is asking you to execute: {query}
         generate the code in pandas to get this query based on the schema: {self.schema}
+        this is the df you have to work with: {self.df.head()}
 
         you need to return the query in this format only, and do not say anything else, or someone will die.
         instead of using df, please use self.df in your code.
         just return the pandas directive and assume that self.df is already loaded and ready to query.
         Generate the code so i can execute with the "eval" python function.
         please just return the pandas directive.
+        remember to use the schema and df to generate the code.
         DO NOT GENERATE CODE LIKE:
         ''' python '''
 
@@ -74,11 +78,12 @@ class Excel_Agent:
 
         """
         response = gpt_call(prompt=prompt, system=self.system)
-        print(response)
         code = response.split("code:")[1]
+        print(code)
 
         result = eval(code)
         return result
+
 
 
 
