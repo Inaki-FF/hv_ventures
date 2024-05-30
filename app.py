@@ -13,18 +13,14 @@ if 'responses' not in st.session_state:
     st.session_state['responses'] = []
 
 # Chat input
-user_input = st.text_input("You: ", "")
+user_input = st.text_input("Hazme una pregunta: ", "")
 
 if st.button("Send"):
     if user_input:
-        # Append user message to chat history
-        agent.insert_chat(user_input, "")
+
         
         # Simulate bot response
         bot_response = agent.talk(user_input)
-        
-        # Append bot response to chat history
-        agent.insert_chat("", bot_response)
         
         # Store chat history in session state
         st.session_state['responses'].append({"user": user_input, "bot": bot_response})
